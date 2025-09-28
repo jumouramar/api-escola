@@ -17,6 +17,7 @@ public class EscolaApplication implements CommandLineRunner {
 	private final ProfessorRepository professorRepository;
 	private final TurmaRepository turmaRepository;
 	private final InscricaoRepository inscricaoRepository;
+	private final DisciplinaRepository disciplinaRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EscolaApplication.class, args);
@@ -25,6 +26,14 @@ public class EscolaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		// Disciplinas
+		Disciplina discMat = disciplinaRepository.save(
+				new Disciplina(null, "Matemática", 80, null)
+		);
+		Disciplina discPort = disciplinaRepository.save(
+				new Disciplina(null, "Português", 60, null)
+		);
+
 		// Professores
 		Professor prof1 = professorRepository.save(new Professor(
 				null, "Carlos Ribeiro", "carlos@email.com", null));
@@ -32,10 +41,8 @@ public class EscolaApplication implements CommandLineRunner {
 				null, "Maria Oliveira", "maria@email.com", null));
 
 		// Turmas
-		Turma turma1 = turmaRepository.save(new Turma(
-				null, 2025, "Matutino", prof1, null));
-		Turma turma2 = turmaRepository.save(new Turma(
-				null, 2025, "Noturno", prof2, null));
+		Turma turma1 = turmaRepository.save(new Turma(null, 2025, "Matutino", prof1, null, discMat));
+		Turma turma2 = turmaRepository.save(new Turma(null, 2025, "Noturno",  prof2, null, discPort));
 
 		// Alunos
 		Aluno aluno1 = alunoRepository.save(new Aluno(
@@ -51,6 +58,6 @@ public class EscolaApplication implements CommandLineRunner {
 		inscricaoRepository.save(new Inscricao(null, LocalDateTime.now(), aluno2, turma2));
 		inscricaoRepository.save(new Inscricao(null, LocalDateTime.now(), aluno3, turma2));
 
-		System.out.println("Banco populado com dados iniciais de Alunos, Professores, Turmas e Inscrições!");
+		System.out.println("Banco populado com dados iniciais de Alunos, Professores, Turmas, Inscrições, e Disciplinas.");
 	}
 }

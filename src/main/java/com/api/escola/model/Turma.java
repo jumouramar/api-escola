@@ -34,4 +34,10 @@ public class Turma {
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     @JsonIgnore // impede serializacao infinita
     private List<Inscricao> inscricoes;
+
+    // Uma turma possui 1 disciplina
+    @ManyToOne
+    @JoinColumn(name = "disciplina_id")
+    @JsonIgnoreProperties("turmas")
+    private Disciplina disciplina;
 }
