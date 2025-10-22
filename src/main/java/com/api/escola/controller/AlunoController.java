@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/alunos")
@@ -15,7 +16,10 @@ public class AlunoController {
     private final AlunoService alunoService;
 
     @GetMapping
-    public ResponseEntity<List<Aluno>> listar() {
+    public ResponseEntity<List<Aluno>> listar(@RequestParam(required = false) Long turmaId) {
+        if (turmaId != null) {
+            return ResponseEntity.ok(alunoService.recuperarAlunoPorTurma(turmaId));
+        }
         return ResponseEntity.ok(alunoService.recuperarAlunos());
     }
 

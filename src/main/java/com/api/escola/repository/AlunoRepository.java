@@ -17,4 +17,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     @Query("select a from Aluno a left outer join fetch a.inscricoes order by a.id")
     List<Aluno> recuperarAlunos();
+
+    @Query("SELECT DISTINCT a FROM Aluno a JOIN a.inscricoes i WHERE i.turma.id = :turmaId")
+    List<Aluno> recuperarAlunosPorTurma(@Param("turmaId") Long turmaId);
 }

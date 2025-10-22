@@ -40,4 +40,8 @@ public class AlunoService {
     public void removerAlunoPorId(Long id) {
         alunoRepository.deleteById(id);
     }
+
+    public List<Aluno> recuperarAlunoPorTurma(Long turmaId) {
+        return alunoRepository.recuperarAlunosPorTurma(turmaId);
+    }
 }
