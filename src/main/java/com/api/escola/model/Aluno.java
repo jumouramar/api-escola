@@ -2,6 +2,9 @@ package com.api.escola.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import java.util.List;
 
@@ -17,10 +20,13 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, message = "Nome deve ter no mínimo 3 caracteres")
     private String nome;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email inválido")
     private String email;
 
     // Um aluno pode ter 0 ou N inscrições

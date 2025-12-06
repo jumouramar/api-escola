@@ -2,6 +2,8 @@ package com.api.escola.controller;
 
 import com.api.escola.model.Aluno;
 import com.api.escola.service.AlunoService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +31,12 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<Aluno> cadastrar(@RequestBody Aluno aluno) {
+    public ResponseEntity<Aluno> cadastrar(@Valid @RequestBody Aluno aluno) {
         return ResponseEntity.ok(alunoService.cadastrarAluno(aluno));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Aluno> atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
+    public ResponseEntity<Aluno> atualizar(@PathVariable Long id, @Valid @RequestBody Aluno aluno) {
         aluno.setId(id);
         return ResponseEntity.ok(alunoService.alterarAluno(aluno));
     }
