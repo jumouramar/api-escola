@@ -28,4 +28,4 @@ public class Inscricao {
     @ManyToOne
     @JoinColumn(name = "turma_id", nullable = false)
     private Turma turma;
-}
+}   
