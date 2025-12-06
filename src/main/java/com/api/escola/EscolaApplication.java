@@ -2,10 +2,14 @@ package com.api.escola;
 
 import com.api.escola.model.*;
 import com.api.escola.repository.*;
+import com.api.escola.auth.model.User;
+import com.api.escola.auth.repository.UserRepository;
+import com.api.escola.auth.util.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +22,8 @@ public class EscolaApplication implements CommandLineRunner {
 	private final TurmaRepository turmaRepository;
 	private final InscricaoRepository inscricaoRepository;
 	private final DisciplinaRepository disciplinaRepository;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EscolaApplication.class, args);
@@ -25,6 +31,14 @@ public class EscolaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		// Usuários
+		User admin = new User("Admin", "admin@mail.com", "password", Role.ADMIN);
+        admin.setSenha(passwordEncoder.encode(admin.getSenha()));
+        userRepository.save(admin);
+
+        User user = new User("User", "user@mail.com", "password", Role.USER);
+        user.setSenha(passwordEncoder.encode(user.getSenha()));
+        userRepository.save(user);
 
 		// Disciplinas
 		Disciplina discDW = disciplinaRepository.save(
